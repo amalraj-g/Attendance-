@@ -44,12 +44,10 @@ const Attendance = ( ) => {
 return (
     <>
    
-      <Button  class="btn" onClick={onCheckInHandler} >checkIn</Button>
-      <div class="spacer"></div>
-      <Button  class="btn" onClick={onCheckOutHandler}>checkOut</Button> 
+     
     </>
   )
-    }
+}
 export default Attendance;
 
 

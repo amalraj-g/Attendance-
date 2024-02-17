@@ -23,7 +23,7 @@ export const createAttendance = async (req, res) => {
       Exittime: null, 
       });
 
-      
+      console.log()
    const savedAttendance = await newAttendance.save();
    res.status(201).json(savedAttendance);
   
@@ -32,6 +32,31 @@ export const createAttendance = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+
+
+
+
+
+
+
+// export const getAttendance = async (req, res) => {
+//   try {
+    
+
+//     const newAttendance = new Attendance.find({})
+//       // console.log(Date)
+//    const savedAttendance = await newAttendance.save();
+//    res.status(200).json(savedAttendance);
+  
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
+
+
 
 
 

@@ -4,5 +4,6 @@ import {createAttendance, checkoutAttendance} from '../controllers/AttendanceCon
 const router = express.Router();
 router.post('/remark',createAttendance);
 router.put('/remark/:id', checkoutAttendance);
+// router.get('/remark/',getAttendance)
 
 export default router;
