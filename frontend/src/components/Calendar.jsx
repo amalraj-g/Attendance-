@@ -41,14 +41,22 @@ const MyCalendar = () => {
       ).toISOString();
       const developedExit = moment(developedend).format("HH:mm:ss");
 
-      const calendarFormattedEvents = {
-        id: responseData._id,
-        title: "In: " + developedEntry + " " + "Out:" + developedExit,
-        start: developedstart,
-        end: developedend,
-      };
+      const calendarFormattedEvents = [
+        {
+          id: responseData._id,
+          title: "In  : " + developedEntry,
+          start: developedstart,
+          end: developedend,
+        },
+        {
+          id: responseData._id,
+          title: "Out : " + developedExit,
+          start: developedstart,
+          end: developedend,
+        },
+      ];
 
-      setEvents([calendarFormattedEvents]);
+      setEvents(calendarFormattedEvents);
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
@@ -66,8 +74,7 @@ const MyCalendar = () => {
   // console.log(events.end);
   // console.log("hi");
 
-  //   const firstEvent = events.length > 0 ? [events[0]] : [];
-  // console.log(firstEvent)
+ 
 
   const implementData = async () => {
     try {
@@ -107,17 +114,26 @@ const MyCalendar = () => {
       ).toISOString();
       const developedExit = moment(developedend).format("HH:mm:ss");
 
-      const calendarFormattedEvents = {
-        id: responseData._id,
-        title: "In:" + developedEntry + " " + "Out:" + developedExit,
-        start: developedstart,
-        end: developedend,
-      };
+      const calendarFormattedEvents = [
+        {
+          id: responseData._id,
+          title: "In  : " + developedEntry,
+          start: developedstart,
+          end: developedend,
+        },
+        {
+          id: responseData._id,
+          title: "Out : " + developedExit,
+          start: developedstart,
+          end: developedend,
+        },
+      ];
+
 
       console.log(calendarFormattedEvents.id);
       console.log(calendarFormattedEvents.title);
 
-      setEvents([calendarFormattedEvents]);
+      setEvents(calendarFormattedEvents);
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
