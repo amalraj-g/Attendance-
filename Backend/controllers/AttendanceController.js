@@ -41,20 +41,17 @@ export const createAttendance = async (req, res) => {
 
 
 
-// export const getAttendance = async (req, res) => {
-//   try {
+export const getAttendance = async (req, res) => {
+  try {
     
-
-//     const newAttendance = new Attendance.find({})
-//       // console.log(Date)
-//    const savedAttendance = await newAttendance.save();
-//    res.status(200).json(savedAttendance);
+      const register=  await Attendance.find();
+           res.status(200).json(register);
+      } catch(err) {
+           res.status(404).json({message:err});
+      } 
+   };
   
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
+
 
 
 
