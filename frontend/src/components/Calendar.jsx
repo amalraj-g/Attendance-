@@ -10,12 +10,17 @@ const MyCalendar = () => {
 
   const [events, setEvents] = useState([]);
   const [totalHours, setTotalHours] = useState(0);
-  
+  const [checkedIn, setCheckedIn] = useState(false);
+  const [checkedOut, setCheckedOut] = useState(false);
+  const [hasCheckedIn, setHasCheckedIn] = useState(false);
+
   
 const getData = async () => {
     try {
+      // const storedId = localStorage.getItem("id");
       const response = await axios.get("http://localhost:5001/details/remark/");
       const collectionData = response.data;
+      console.log(collectionData);
       const dailyDurations = {};
 
       const formattedEvents = collectionData
@@ -48,6 +53,15 @@ const getData = async () => {
           ).toISOString();
           const developedExit = moment(developedEnd).format("HH:mm:ss");
 
+          const checkin = `In  : ${developedEntry}`;
+          const checkout = `Out : ${developedExit}`;
+
+          let durationString = "";
+          console.log(developedExit)
+          if (developedExit !== '00:00:00') {
+            // Calculate duration only for checkout events
+           
+            console.log(developedExit)
           const developedEntryMoment = moment(developedEntry, "HH:mm:ss");
           const developedExitMoment = moment(developedExit, "HH:mm:ss");
 
@@ -63,14 +77,13 @@ const getData = async () => {
           const minutes = duration.minutes();
           const seconds = duration.seconds();
 
-          const durationString = `Total hrs: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+           durationString = `Total hrs: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
 
           console.log(`Time difference: ${durationString}`);
          
-         
-
-          const checkin = `In  : ${developedEntry}`;
-          const checkout = `Out : ${developedExit}`;
+          }
+          
+          
           return [
             {
               id: responseData._id,
@@ -112,6 +125,7 @@ const getData = async () => {
   useEffect(() => {
     getData();
   }, []);
+
   useEffect(() => {
       console.log(events);
     }, [events]);
@@ -129,7 +143,17 @@ const getData = async () => {
     return colors[index % colors.length];
   };
  
-
+  const handleCheckIn = async () => {
+    if (!hasCheckedIn && !checkedOut) {
+      
+      await createData();
+      setCheckedIn(true);
+      setHasCheckedIn(true);
+      localStorage.setItem("hasCheckedIn", "true");
+    } else {
+      alert("You have already checked in for the day.");
+    }
+  };
   
   const createData = async () => {
     try {
@@ -137,7 +161,7 @@ const getData = async () => {
       const responseData = response.data;
 
       localStorage.setItem("id", responseData._id);
-
+      console.log( responseData._id)
       const developed = moment(
         moment(
           `${responseData.Date} ${responseData.Entrytime} `,
@@ -186,17 +210,33 @@ const getData = async () => {
       console.error(`Error fetching data: ${error.message}`);
     }
   };
-
+  
   useEffect(() => {
-    createData();
+    const hasCheckedInStorage = localStorage.getItem("hasCheckedIn") === "true";
+    setHasCheckedIn(hasCheckedInStorage);
   }, []);
+  // useEffect(() => {
+  //   createData();
+  // }, []);
 
   
  
+  const handleCheckOut = async () => {
+    if (checkedIn && !checkedOut) {
+      
+      await implementData();
+      setCheckedOut(true);
+    } else if (!checkedIn) {
+      alert("You need to check in first.");
+    } else {
+      alert("You have already checked out for the day.");
+    }
+  };
 
   const implementData = async () => {
     try {
       const storedId = localStorage.getItem("id");
+      console.log(storedId)
       const response = await axios.put(
         `http://localhost:5001/details/remark/${storedId}`
       );
@@ -259,17 +299,17 @@ const getData = async () => {
     }
   };
 
-  useEffect(() => {
-    implementData();
-  }, []);
+  // useEffect(() => {
+  //   implementData();
+  // }, []);
 
   return (
      <div>
-      <Button class="btn" onClick={createData}>
+      <Button class="btn" onClick={handleCheckIn}>
         checkIn
       </Button>
        <div class="spacer"></div>
-       <Button class="btn" onClick={implementData}>
+       <Button class="btn" onClick={handleCheckOut}>
          checkOut
       </Button>
       <div>Total hours for the month: {Math.floor(totalHours)} hours {(totalHours % 1 * 60).toFixed(0)} minutes</div>
@@ -278,7 +318,7 @@ const getData = async () => {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: "100vh" }}
+        style={{ height: "120vh" }}
         eventPropGetter={(event) => ({
           style: { backgroundColor: event.color },
         })}
@@ -293,4 +333,10 @@ export default MyCalendar;
 
 
 
+
+
+
+
+ 
+  
 
