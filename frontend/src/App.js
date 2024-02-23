@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 import "./App.css";
+import BarChart from "./components/BarChart";
+
 
 
 
@@ -22,6 +24,7 @@ function App() {
           <Outlet />
         </Container>
       </main>
+      <BarChart />
       <Footer />
       <ToastContainer />
    

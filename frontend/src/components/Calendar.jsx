@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Bar } from 'react-chartjs-2';
 
 const MyCalendar = () => {
   const localizer = momentLocalizer(moment);
@@ -12,7 +13,7 @@ const MyCalendar = () => {
   const [totalHours, setTotalHours] = useState(0);
   const [checkedIn, setCheckedIn] = useState(false);
   const [checkedOut, setCheckedOut] = useState(false);
-  const [hasCheckedIn, setHasCheckedIn] = useState(false);
+ // const [hasCheckedIn, setHasCheckedIn] = useState(false);
 
   
 const getData = async () => {
@@ -144,12 +145,12 @@ const getData = async () => {
   };
  
   const handleCheckIn = async () => {
-    if (!hasCheckedIn && !checkedOut) {
+    if (!checkedIn && !checkedOut) {
       
       await createData();
       setCheckedIn(true);
-      setHasCheckedIn(true);
-      localStorage.setItem("hasCheckedIn", "true");
+      //setHasCheckedIn(true);
+      //localStorage.setItem("hasCheckedIn", "true");
     } else {
       alert("You have already checked in for the day.");
     }
@@ -211,10 +212,10 @@ const getData = async () => {
     }
   };
   
-  useEffect(() => {
-    const hasCheckedInStorage = localStorage.getItem("hasCheckedIn") === "true";
-    setHasCheckedIn(hasCheckedInStorage);
-  }, []);
+  // useEffect(() => {
+  //   const hasCheckedInStorage = localStorage.getItem("hasCheckedIn") === "true";
+  //   setHasCheckedIn(hasCheckedInStorage);
+  // }, []);
   // useEffect(() => {
   //   createData();
   // }, []);
