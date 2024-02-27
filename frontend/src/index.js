@@ -10,6 +10,7 @@ import App from './App';
 import './index.css';
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
+import DashBoardScreen from "./screens/DashBoardScreen";
 //import { BarChart } from './components/BarChart';
 import reportWebVitals from './reportWebVitals';
 //import { Provider } from "react-redux";
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index={true} path="/home" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} /> 
-       
+      <Route path="/dashboard" element={<DashBoardScreen />} /> 
     </Route>
     ))
 

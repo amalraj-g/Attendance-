@@ -12,10 +12,13 @@ return (
   <div>
      <Navbar bg="warning" variant="dark" expand="md" collapseOnSelect>
           <Container>
-                <LinkContainer to='/'>
+                
                 <Navbar.Brand>Time Tracker</Navbar.Brand>
                 
-                </LinkContainer>
+                
+                <LinkContainer to='/dashboard'>
+                        <Nav.Link>DashBoard</Nav.Link>
+                      </LinkContainer>
                 
                 <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
                 <Navbar.Collapse id="basic-navbar-nav">

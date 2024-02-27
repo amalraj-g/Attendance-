@@ -4,7 +4,7 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import { Bar } from 'react-chartjs-2';
+
 
 const MyCalendar = () => {
   const localizer = momentLocalizer(moment);
@@ -13,6 +13,10 @@ const MyCalendar = () => {
   const [totalHours, setTotalHours] = useState(0);
   const [checkedIn, setCheckedIn] = useState(false);
   const [checkedOut, setCheckedOut] = useState(false);
+  
+
+  
+  
  // const [hasCheckedIn, setHasCheckedIn] = useState(false);
 
   
@@ -69,18 +73,35 @@ const getData = async () => {
           const duration = moment.duration(
             developedExitMoment.diff(developedEntryMoment)
           );
-
+         console.log(duration)
+         
           const dateKey = moment(developedEntryMoment).format("YYYY-MM-DD");
           dailyDurations[dateKey] = (dailyDurations[dateKey] || 0) + duration.asHours();
-  
+            console.log(dailyDurations[dateKey])
           // Extract hours, minutes, and seconds from the duration
           const hours = duration.hours();
+          console.log(hours)
           const minutes = duration.minutes();
           const seconds = duration.seconds();
+          
 
-           durationString = `Total hrs: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-
+          durationString = `Total hrs: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
           console.log(`Time difference: ${durationString}`);
+
+          // setDailyData({
+          //   labels:Object.keys(developedDate),
+          //   datasets: [
+          //     {
+          //       label: 'Hours per Day',
+          //       data: Object.values(hours),
+                
+          //       backgroundColor: '#7EAA92',
+          //       barPercentage: 0.2, // Adjust this value to set the maximum width
+          //       categoryPercentage: 0.4,
+          //      // Use the color you want for the bars
+          //     },
+          //   ],
+          // });
          
           }
           
@@ -110,10 +131,33 @@ const getData = async () => {
           ];
         })
         .flat();
-        const monthlyTotalHours = Object.values(dailyDurations).reduce((total, dailyTotal) => total + dailyTotal, 0);
+       
+
+        
+
+       console.log(dailyDurations)
+        const monthlyTotalHours = Object.values(dailyDurations ).reduce((total, dailyTotal) => total + dailyTotal, 0);
+        console.log(monthlyTotalHours)
+        // console.log(dailyDurations)
+        // console.log(dailyDurations.hours)
+        
         setTotalHours(monthlyTotalHours);
-        
-        
+        // setDailyHours(Object.values(dailyDurations));
+
+       
+        // setChartData({
+        //   labels:Object.keys(dailyDurations),
+        //   datasets: [
+        //     {
+        //       label: 'Hours',
+        //       data: Object.values(dailyDurations),
+        //       backgroundColor: '#7EAA92',
+        //       barPercentage: 0.2, // Adjust this value to set the maximum width
+        //       categoryPercentage: 0.4,
+        //      // Use the color you want for the bars
+        //     },
+        //   ],
+        // });
 
       setEvents(formattedEvents);
 
@@ -306,7 +350,7 @@ const getData = async () => {
 
   return (
      <div>
-      <Button class="btn" onClick={handleCheckIn}>
+       <Button class="btn" onClick={handleCheckIn}>
         checkIn
       </Button>
        <div class="spacer"></div>
@@ -314,7 +358,10 @@ const getData = async () => {
          checkOut
       </Button>
       <div>Total hours for the month: {Math.floor(totalHours)} hours {(totalHours % 1 * 60).toFixed(0)} minutes</div>
-      <Calendar
+      
+
+       
+       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
@@ -323,10 +370,13 @@ const getData = async () => {
         eventPropGetter={(event) => ({
           style: { backgroundColor: event.color },
         })}
-      />
+      /> 
       
      
-    </div>
+      
+      </div>
+      
+     
   );
 };
 
